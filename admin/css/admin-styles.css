@@ -1,0 +1,117 @@
+/**
+ * Advanced Regrader for LearnDash - Admin Styles
+ *
+ * @package LD_Advanced_Regrader
+ * @since   1.0.0
+ */
+
+/* Container */
+.ld-regrade-container {
+	margin-top: 20px;
+}
+
+/* Table */
+.ld-regrade-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ld-regrade-table th,
+.ld-regrade-table td {
+	border: 1px solid #e1e1e1;
+	padding: 12px;
+}
+
+.ld-regrade-table th {
+	background: #f8f9fa;
+	font-weight: 600;
+}
+
+/* Score Difference Indicators */
+.score-diff-positive {
+	color: #27ae60;
+	font-weight: bold;
+	background: #e8f5e9;
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+
+.score-diff-negative {
+	color: #c0392b;
+	font-weight: bold;
+	background: #ffebee;
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+
+.score-diff-neutral {
+	color: #7f8c8d;
+}
+
+/* Search Box */
+.search-box-container {
+	margin-bottom: 15px;
+	background: #fff;
+	padding: 15px;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+}
+
+.search-box-container input[type="text"] {
+	width: 300px;
+	padding: 8px;
+}
+
+/* Pagination */
+.ld-regrade-pagination {
+	margin-top: 15px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 5px;
+}
+
+.ld-regrade-pagination .page-numbers {
+	display: inline-block;
+	min-width: 32px;
+	height: 32px;
+	line-height: 30px;
+	text-align: center;
+	border: 1px solid #c3c4c7;
+	background: #f6f7f7;
+	color: #2271b1;
+	text-decoration: none;
+	border-radius: 3px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	font-size: 13px;
+}
+
+.ld-regrade-pagination .page-numbers:hover {
+	background: #f0f0f1;
+	border-color: #8c8f94;
+	color: #135e96;
+}
+
+.ld-regrade-pagination .page-numbers.current {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+	pointer-events: none;
+}
+
+/* Batch Progress */
+#batch-progress-container {
+	margin-top: 20px;
+	padding: 15px;
+	background: #fff;
+	border: 1px solid #ccc;
+}
+
+#batch-progress-bar {
+	width: 100%;
+	height: 20px;
+}
