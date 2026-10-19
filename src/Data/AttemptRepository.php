@@ -28,7 +28,8 @@ class AttemptRepository {
 
 		list( $from_where, $params ) = $this->build_from_where( $query );
 
-		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+		// $from_where is built in build_from_where() with its own placeholders; $params holds their values.
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.DirectDatabaseQuery
 		$total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) {$from_where}", $params ) );
 
 		$items = array();
@@ -191,7 +192,7 @@ class AttemptRepository {
 	public function find_statistic_ref_id( int $user_id, int $pro_quiz_id, int $completed ): int {
 		global $wpdb;
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery
 		$ref_id = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT statistic_ref_id FROM {$this->statistic_ref_table()}
@@ -202,6 +203,7 @@ class AttemptRepository {
 				$completed
 			)
 		);
+		// phpcs:enable
 
 		return (int) $ref_id;
 	}
@@ -237,7 +239,7 @@ class AttemptRepository {
 	/**
 	 * Write re-scored per-question results to the statistics table.
 	 *
-	 * @param int                                                          $statistic_ref_id Statistic reference ID.
+	 * @param int                                                           $statistic_ref_id Statistic reference ID.
 	 * @param array<int, array{correct: bool, points: int, status: string}> $results          Per-question results.
 	 * @return void
 	 */
