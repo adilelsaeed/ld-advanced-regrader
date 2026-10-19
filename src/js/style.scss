@@ -1,0 +1,127 @@
+// Logical properties keep the layout correct in RTL admin (e.g. Arabic).
+
+.ldar-app {
+	max-width: 1200px;
+}
+
+.ldar-intro {
+	max-width: 70ch;
+	color: #50575e;
+}
+
+.ldar-filters {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 16px;
+	align-items: end;
+	margin-block: 16px;
+	padding: 16px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.ldar-summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 24px;
+	align-items: center;
+	margin-block: 16px 8px;
+	color: #50575e;
+}
+
+.ldar-table {
+
+	td,
+	th {
+		vertical-align: middle;
+	}
+}
+
+.ldar-muted {
+	color: #646970;
+}
+
+.ldar-note {
+	display: block;
+	font-size: 12px;
+	color: #996800;
+}
+
+.ldar-tag {
+	margin-inline-start: 8px;
+	padding: 1px 6px;
+	font-size: 11px;
+	color: #2c3338;
+	background: #f0f0f1;
+	border-radius: 2px;
+}
+
+.ldar-diff {
+	font-weight: 600;
+
+	&--positive {
+		color: #00721c;
+	}
+
+	&--negative {
+		color: #b32d2e;
+	}
+
+	&--neutral {
+		color: #646970;
+	}
+}
+
+.ldar-flip {
+	font-weight: 600;
+
+	&--up {
+		color: #00721c;
+	}
+
+	&--down {
+		color: #b32d2e;
+	}
+}
+
+.ldar-pagination {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: flex-end;
+	margin-block: 12px;
+}
+
+.ldar-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 16px;
+	align-items: center;
+	margin-block: 16px;
+}
+
+.ldar-batch {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	align-items: center;
+	margin-block: 16px;
+
+	progress {
+		inline-size: min(100%, 360px);
+		block-size: 12px;
+	}
+}
+
+.ldar-empty {
+	margin-block: 16px;
+	color: #50575e;
+}
+
+.ldar-modal-actions {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+	margin-block-start: 16px;
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<ruleset name="Advanced Regrader for LearnDash">
+	<description>WordPress coding standards for the plugin.</description>
+
+	<file>ld-advanced-regrader.php</file>
+	<file>uninstall.php</file>
+	<file>src</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_wp_version" value="6.2"/>
+
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress-Docs"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="ld-advanced-regrader"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="ldar"/>
+				<element value="AdilElsaeed\LDRegrader"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Classes in src/ follow PSR-4 file names. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>src/*</exclude-pattern>
+	</rule>
+</ruleset>
