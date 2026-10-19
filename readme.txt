@@ -1,76 +1,93 @@
 === Advanced Regrader for LearnDash ===
 Contributors: adilelsaeed
 Tags: learndash, quiz, regrade, lms, scores
-Requires at least: 5.0
-Tested up to: 6.7
-Stable tag: 1.0.2
+Requires at least: 6.2
+Tested up to: 7.0
+Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Safely recalculate and update quiz grades for all previous LearnDash quiz attempts after modifying questions, answers, or point values.
+Recalculate LearnDash quiz scores for past attempts after you change questions, correct answers or points, with a preview before anything is saved.
 
 == Description ==
 
-**Advanced Regrader for LearnDash** is an administrative tool that allows you to safely and efficiently recalculate quiz grades for all previous attempts after modifying quiz questions, answer correct-states, or point values.
+LearnDash saves a student's score the moment they finish a quiz. If you later fix a quiz (a wrong answer was marked correct, a question's points change, a question is added), students who already took it keep their old scores.
 
-= The Problem =
+Your options are usually to leave the wrong scores, or ask everyone to retake the quiz. Custom scripts that update thousands of attempts tend to hit PHP time and memory limits.
 
-By default, LearnDash LMS permanently records a student's score the moment they complete a quiz. If you later discover a mistake in a quiz (e.g., a wrong answer was marked as correct, a question's points value needs to be changed, or new questions are added), the scores of students who have already taken the quiz are NOT updated automatically.
+**Advanced Regrader for LearnDash** recalculates every past attempt from the answers the student actually gave, against the quiz as it is now.
 
-Administrators are left with two bad choices:
+= Features =
 
-1. Leave the old incorrect scores as they are.
-2. Manually delete all attempts and ask the students to retake the quiz.
+* **Preview first.** See each attempt's saved score next to its recalculated score, the difference, and any pass/fail change. Nothing is saved until you confirm.
+* **Regrade selected attempts or all matching attempts.** "All" runs in short batches (50 by default) with a progress bar and a Stop button, so large quizzes never hit server limits.
+* **Filter** by quiz, LearnDash group, or student name, email or username.
+* **Keeps everything consistent.** Updates the attempt, its pass/fail status, the student's quiz history and the per-question quiz statistics.
+* **Safe with every question type.** Single and multiple choice questions are re-scored. Other types (free text, sorting, essay, ...) keep the points the student was originally awarded, and the preview says how many were kept.
+* **Optional course progress.** Mark the quiz complete for students who now pass; LearnDash then updates course completion itself.
+* **Original score kept** in the attempt's data, even across repeated regrades.
+* **Works in RTL** languages such as Arabic.
 
-Furthermore, attempting to run a custom script to update thousands of historical quiz attempts usually results in server crashes, PHP timeouts, and memory exhaustion errors.
+= For developers =
 
-**This plugin completely solves this problem.**
-
-= Key Features =
-
-* **Simulation & Preview** — Before committing any changes, view a paginated table showing the student's current score alongside the simulated new score based on the latest quiz question settings.
-* **Comprehensive Regrading** — Accurately recalculates scores and statistics for all previous attempts, strictly matching the answers the student provided at the time.
-* **AJAX Background Bulk Regrading** — Safely process tens of thousands of attempts in the background. The plugin handles updates in manageable batches (50 at a time) with a live progress bar, completely preventing server timeouts and memory limit crashes.
-* **Smart Filtering** — Narrow down the attempts by a specific Quiz, a LearnDash Group, or a specific User (search by Name or Email).
-* **Manual Selective Updating** — Selectively regrade only specific students instead of running the full bulk auto-regrader.
-* **Course Progress Sync** — Optionally update the student's overall Course Completion status if their newly regraded score turns a "Failed" quiz into a "Passed" quiz.
+* REST API under `ld-advanced-regrader/v1` (`/options`, `/attempts`, `/regrade`, `/regrade/batch`).
+* Filters: `ldar_capability` (default `manage_options`), `ldar_batch_size` (default 50).
+* Action: `ldar_attempt_regraded( $activity_id, $result, $old_meta )`.
+* Source, tests and CI: https://github.com/adilelsaeed/ld-advanced-regrader
 
 == Installation ==
 
-1. Upload the `ld-advanced-regrader` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Navigate to **LearnDash LMS > Regrade Scores** in your WordPress admin dashboard.
+1. Upload the `ld-advanced-regrader` folder to `/wp-content/plugins/`, or install the release zip from the Plugins screen.
+2. Activate the plugin.
+3. Go to **LearnDash LMS > Regrade Scores**.
+
+LearnDash LMS must be installed and active.
 
 == Frequently Asked Questions ==
 
-= Does this plugin require LearnDash LMS? =
+= Does it change student answers? =
 
-Yes. LearnDash LMS must be installed and active for this plugin to function.
+No. It reads the answers the student submitted and recalculates the score. Answers are never modified.
 
-= Will this plugin modify student answers? =
+= Is it safe on thousands of attempts? =
 
-No. The plugin only recalculates scores based on the current question settings. Student answers are never modified.
+Yes. Filtering and paging run in the database, and "Save new scores for all" processes attempts in short batches. You can stop at any time. Take a database backup before large regrades, as with any bulk change.
 
-= Is it safe to use on a large number of attempts? =
+= Which question types are re-scored? =
 
-Yes. The batch processing feature handles updates in chunks of 50, preventing server timeouts and memory issues. You can safely regrade tens of thousands of attempts.
-
-= Can I preview the changes before saving? =
-
-Yes. The simulation table shows you the current score vs. the new calculated score for every attempt before you commit any changes.
+Single choice and multiple choice. Other types keep their original points, so a regrade never takes away points it cannot re-check.
 
 = Does it update course completion? =
 
-Only if you check the "Update Course Completion" option. If a student's regraded score changes a failed quiz to a passing grade, the course progress will be updated accordingly.
+Only if you tick "Mark the quiz complete for students who now pass". It marks the quiz step complete for attempts that pass after regrading, and LearnDash re-evaluates course completion from there.
+
+= Who can use it? =
+
+Administrators (`manage_options`) by default. Developers can change this with the `ldar_capability` filter.
 
 == Screenshots ==
 
-1. Main interface showing quiz selection and filtering options.
-2. Simulation table with current vs. new scores and difference highlighting.
-3. Batch processing progress bar for bulk regrading.
+1. Filters and the preview table with current vs. new scores.
+2. Confirmation before saving.
+3. Batch progress with a Stop button.
 
 == Changelog ==
+
+= 2.0.0 =
+* New admin screen built with React and WordPress components, with a confirmation dialog before saving.
+* New REST API replaces admin-ajax.
+* Security: scores are now always recalculated on the server when saving. Previously the page submitted the new scores itself.
+* Fix: "Update course completion" no longer marks a course complete for students who still fail.
+* Fix: question types other than single and multiple choice keep their original points instead of scoring zero.
+* Fix: a missing single-choice answer no longer counts as choosing the first option.
+* Fix: when an attempt cannot be matched in the student's quiz history, it is left unchanged instead of overwriting another attempt.
+* Filtering, counting and paging now run in SQL, so large quizzes load quickly.
+* Batch regrading can be stopped mid-way; batch size is filterable.
+* The first original score is kept across repeated regrades.
+* New `ldar_capability` and `ldar_batch_size` filters and `ldar_attempt_regraded` action.
+* Requires WordPress 6.2+.
+* Unit tests (PHPUnit, Jest), coding standards, static analysis and GitHub Actions CI.
 
 = 1.0.2 =
 * Added AJAX-based batch processing for bulk regrading with progress bar.
@@ -84,12 +101,8 @@ Only if you check the "Update Course Completion" option. If a student's regraded
 
 = 1.0.0 =
 * Initial release.
-* Score simulation and preview table.
-* Selective and bulk regrading.
-* Group and user search filtering.
-* Course progress sync option.
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-Adds batch processing for safely handling large datasets without server timeouts.
+= 2.0.0 =
+Security and correctness release: scores are recalculated on the server when saving, and course completion is only updated for passing attempts. Requires WordPress 6.2+.

@@ -1,0 +1,46 @@
+{
+	"name": "ld-advanced-regrader",
+	"version": "2.0.0",
+	"private": true,
+	"description": "React admin app for Advanced Regrader for LearnDash.",
+	"license": "GPL-2.0-or-later",
+	"author": "Adil Elsaeed",
+	"engines": {
+		"node": ">=20"
+	},
+	"files": [
+		"build",
+		"languages",
+		"src/**/*.php",
+		"ld-advanced-regrader.php",
+		"uninstall.php",
+		"index.php",
+		"readme.txt"
+	],
+	"scripts": {
+		"build": "wp-scripts build src/js/index.js",
+		"start": "wp-scripts start src/js/index.js",
+		"lint:js": "wp-scripts lint-js src/js",
+		"lint:css": "wp-scripts lint-style \"src/js/**/*.scss\"",
+		"format": "wp-scripts format src/js",
+		"test:unit": "wp-scripts test-unit-js",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"env": "wp-env"
+	},
+	"devDependencies": {
+		"@testing-library/dom": "^10.4.2",
+		"@testing-library/jest-dom": "^7.0.1",
+		"@testing-library/react": "^16.0.0",
+		"@wordpress/api-fetch": "^7.57.0",
+		"@wordpress/components": "^29.12.0",
+		"@wordpress/date": "^5.57.0",
+		"@wordpress/element": "^9.0.0",
+		"@wordpress/env": "^10.0.0",
+		"@wordpress/i18n": "^6.30.0",
+		"@wordpress/private-apis": "^2.0.0",
+		"@wordpress/scripts": "^30.0.0",
+		"@wordpress/url": "^4.57.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	}
+}
