@@ -48,8 +48,8 @@ class ScoreResult {
 	/**
 	 * Constructor.
 	 *
-	 * @param int                                                          $score            Points earned.
-	 * @param int                                                          $total_points     Points available.
+	 * @param int                                                           $score            Points earned.
+	 * @param int                                                           $total_points     Points available.
 	 * @param array<int, array{correct: bool, points: int, status: string}> $question_results Per-question results.
 	 */
 	public function __construct( int $score, int $total_points, array $question_results ) {

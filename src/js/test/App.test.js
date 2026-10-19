@@ -118,9 +118,9 @@ describe( 'App', () => {
 				updateCourse: false,
 			} )
 		);
-		expect(
-			await screen.findByText( 'Updated 1 attempt.' )
-		).toBeInTheDocument();
+		// Notice also announces its text to screen readers, so it appears twice.
+		const notices = await screen.findAllByText( 'Updated 1 attempt.' );
+		expect( notices[ 0 ] ).toBeInTheDocument();
 	} );
 
 	it( 'does not save anything when the confirmation is cancelled', async () => {

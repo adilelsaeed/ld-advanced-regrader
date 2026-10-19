@@ -38,7 +38,7 @@ class ScoreCalculator {
 	 * Question types the evaluator cannot re-score keep the points the student
 	 * was originally awarded, so a regrade never silently zeroes them.
 	 *
-	 * @param Question[]                                                        $questions Current quiz questions.
+	 * @param Question[]                                                             $questions Current quiz questions.
 	 * @param array<int, array{answer: mixed, points: int|null, correct: bool|null}> $answers   Stored answers keyed by question ID.
 	 * @return ScoreResult
 	 */
